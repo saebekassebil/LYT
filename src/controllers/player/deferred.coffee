@@ -2,10 +2,10 @@
 # --------------------------------------
 
 # ########################################################################### #
-# Wrap a jQuery.Deferred() into a LYT.player.command object                   #
+# Wrap a jQuery.Deferred() into a LYT.player.Command object                   #
 # ########################################################################### #
 
-class LYT.player.command.deferred extends LYT.player.command
+class LYT.player.Command.Deferred extends LYT.player.Command
 
   # Using def in stead of deferred due to name clash when coffeescript
   # compiles to JavaScript

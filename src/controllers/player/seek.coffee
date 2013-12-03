@@ -5,7 +5,7 @@
 # Seek to provided offset in current audio file                               #
 # ########################################################################### #
 
-class LYT.player.command.seek extends LYT.player.command
+class LYT.player.Command.Seek extends LYT.player.Command
 
   constructor: (el, @offset) ->
     super el

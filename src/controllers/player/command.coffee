@@ -30,7 +30,7 @@
 
 nextId = 1
 
-class LYT.player.command extends jQuery.Deferred
+class LYT.player.Command extends jQuery.Deferred
 
   constructor: (@el, deferred) ->
     jQuery.extend this, (deferred or jQuery.Deferred())

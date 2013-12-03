@@ -10,7 +10,7 @@
 #
 # Calling cancel() will pause playback and cause the command to reject.
 
-class LYT.player.command.play extends LYT.player.command
+class LYT.player.Command.Play extends LYT.player.Command
 
   constructor: (el) ->
     super el

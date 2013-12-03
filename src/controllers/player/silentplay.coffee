@@ -10,7 +10,7 @@
 # started. Using this command to play on first user interaction will clear the
 # browsers firstplay flag.
 
-class LYT.player.command.silentplay extends LYT.player.command
+class LYT.player.Command.Silentplay extends LYT.player.Command
 
   constructor: (el) ->
     super el

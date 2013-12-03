@@ -230,11 +230,11 @@ LYT.player =
         # player to start seeking.
         @playClickHook = =>
           @playClickHook = null
-          silentplay = new LYT.player.command.silentplay @el
+          silentplay = new LYT.player.Command.Silentplay @el
           playPromise = silentplay.then =>
             log.message 'Player: load: silentplay done - will load (and possibly seek) now'
             @seekSmilOffsetOrLastmark url, smilOffset
-          return @playCommand = new LYT.player.command.deferred @el, playPromise
+          return @playCommand = new LYT.player.Command.Deferred @el, playPromise
         return jQuery.Deferred().resolve book
       else
         log.message 'Player: chaining seeked because we are not in firstPlay mode'
@@ -303,7 +303,7 @@ LYT.player =
     command = null
     nextSegment = null
     getPlayCommand = =>
-      command = new LYT.player.command.play @el
+      command = new LYT.player.Command.Play @el
       command.progress progressHandler
       command.done =>
         log.group 'Player: play: play command done.', command.status()
@@ -493,7 +493,7 @@ LYT.player =
     result = result.then (segment) =>
       if @getStatus().src != segment.audio
         log.message "Player: seekSegmentOffset: load #{segment.audio}"
-        (new LYT.player.command.load @el, segment.audio).then -> segment
+        (new LYT.player.Command.Load @el, segment.audio).then -> segment
       else
         jQuery.Deferred().resolve segment
 
@@ -518,7 +518,7 @@ LYT.player =
       else
         # Not at the right point - seek
         log.message 'Player: seekSegmentOffset: seek'
-        (new LYT.player.command.seek @el, offset).then -> segment
+        (new LYT.player.Command.Seek @el, offset).then -> segment
 
     # Once the seek has completed, render the segment
     result.done (segment) =>
@@ -542,21 +542,21 @@ LYT.player =
 
   # Plays the given segment
   playSegment: (segment) -> @playSegmentOffset segment, null
-  
+
   # Seeks seconds forward or backward
   playheadSeek: (seconds) ->
     currTime = @getStatus().currentTime
     duration = @getStatus().duration
     seekTime = currTime + seconds
-    
+
     # if time is within boundaries of current section
-    if(seekTime >= 0 && seekTime < duration) 
+    if(seekTime >= 0 && seekTime < duration)
       @wait()
         .then =>
-          new LYT.player.command.seek @el, seekTime
+          new LYT.player.Command.Seek @el, seekTime
         .then =>
           @play() if @playing
-    
+
     else if seekTime < 0 && @hasPreviousSegment()
       # if seekTime is less than 0 we are seeking a segment in previous section if available
       seekTime = seekTime - currTime
@@ -589,7 +589,7 @@ LYT.player =
               seconds = seconds-next.duration()
               nextSegment next
         nextSegment()
-          
+
   # Plays the next segment in queue, and updates currentSegment
   playNextSegment: ->
     if not @hasNextSegment()

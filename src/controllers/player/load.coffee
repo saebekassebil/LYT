@@ -5,7 +5,7 @@
 # Load provided audio file                                                    #
 # ########################################################################### #
 
-class LYT.player.command.load extends LYT.player.command
+class LYT.player.Command.Load extends LYT.player.Command
 
   constructor: (el, @src) ->
     super el

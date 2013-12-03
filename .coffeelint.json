@@ -12,7 +12,7 @@
     },
     "no_trailing_whitespace": {
         "name": "no_trailing_whitespace",
-        "level": "ignore",
+        "level": "warn",
         "allowed_in_comments": false
     },
     "max_line_length": {
@@ -48,7 +48,7 @@
     },
     "no_throwing_strings": {
         "name": "no_throwing_strings",
-        "level": "error"
+        "level": "ignore"
     },
     "no_backticks": {
         "name": "no_backticks",
@@ -64,7 +64,7 @@
     },
     "no_stand_alone_at": {
         "name": "no_stand_alone_at",
-        "level": "ignore"
+        "level": "error"
     },
     "space_operators": {
         "name": "space_operators",

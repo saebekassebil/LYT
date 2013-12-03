@@ -190,7 +190,7 @@ LYT.render = do ->
     # Wait with disabling until it's actually created
     $('#playback-rate .message.disabled').show()
     $('#playback-rate input[type="radio"]').on 'checkboxradiocreate', ->
-      $(@).checkboxradio('disable')
+      $(this).checkboxradio('disable')
 
   hideOrShowButtons: (details) ->
     if details.state is LYT.config.book.states.pending

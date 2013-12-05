@@ -333,7 +333,6 @@ class LYT.Book
       log.error 'Book: segmentByAudioOffset: audio not provided'
       return jQuery.Deferred().reject('audio not provided')
 
-    deferred = jQuery.Deferred()
     promise = @searchSections start, (section) =>
       for segment in section.document.segments
         # Using 0.01s to cover rounding errors (yes, they do occur)
@@ -344,11 +343,6 @@ class LYT.Book
           log.message "Book: segmentByAudioOffset: load segment #{segment.url()}"
           segment.load()
           return segment
-
-    promise.done (segment) ->
-      segment.done -> deferred.resolve segment
-    promise.fail -> deferred.reject()
-    deferred.promise()
 
   # Search for sections using a callback handler
   # Returns a jQuery promise.

@@ -429,8 +429,8 @@ LYT.player =
       oldCommand.cancel()
     else
       previous.resolve()
-    result = previous.then => @playCommand = getPlayCommand()
-    result
+
+    previous.then => @playCommand = getPlayCommand()
 
   seekSmilOffsetOrLastmark: (url, smilOffset) ->
     log.message "Player: seekSmilOffsetOrLastmark: #{url}, #{smilOffset}"
@@ -474,27 +474,35 @@ LYT.player =
 
     segment or= @currentSegment
 
-    result = jQuery.Deferred().resolve()
+    # If this takes a long time, put up the loader
+    # The timeout ensures that we don't display the loader if seeking
+    # without switching audio stream, since that is a very fast operation
+    # which would cause the loader to flicker.
+    # TODO: Only set the loader if switching audio is necessary.
+    setTimeout(
+      =>
+        LYT.loader.register 'Loading sound', result
+        LYT.render.disablePlayerNavigation()
+        result.done -> LYT.render.enablePlayerNavigation()
+      500
+    )
+
+    # Stop playback and ensure that this part of the deferred chain resolves
+    # once playback has stopped
     if @playCommand and @playCommand.state is 'pending'
-      # Stop playback and ensure that this part of the deferred chain resolves
-      # once playback has stopped
-      result = result.then =>
-        @stop().then(
-          -> jQuery.Deferred().resolve()
-          -> jQuery.Deferred().resolve()
-        )
+      result = @stop()
+    else
+      result = jQuery.Deferred().resolve()
 
     # See if we need to initiate loading of a new audio file
-    result = result.then => segment
-    result = result.then (segment) =>
+    result
+    .then =>
       if @getStatus().src != segment.audio
         log.message "Player: seekSegmentOffset: load #{segment.audio}"
-        (new LYT.player.command.load @el, segment.audio).then -> segment
-      else
-        jQuery.Deferred().resolve segment
+        load = new LYT.player.command.load @el, segment.audio
 
     # Now move the play head
-    result = result.then (segment) =>
+    .then =>
       log.message 'Player: seekSegmentOffset: check if it is necessary to seek'
       # Ensure that offset has a useful value
       if offset?
@@ -510,31 +518,15 @@ LYT.player =
       if offset - 0.1 < @getStatus().currentTime < offset + 0.1
         # We're already at the right point in the audio stream
         log.message "Player: seekSegmentOffset: already at offset #{offset} - not seeking"
-        jQuery.Deferred().resolve segment
       else
         # Not at the right point - seek
         log.message 'Player: seekSegmentOffset: seek'
-        (new LYT.player.command.seek @el, offset).then -> segment
+        seek = new LYT.player.command.seek @el, offset
 
     # Once the seek has completed, render the segment
-    result.done (segment) =>
-      @_setCurrentSegment segment
+    .then =>
       @updateHtml segment
-
-    # If this takes a long time, put up the loader
-    # The timeout ensures that we don't display the loader if seeking
-    # without switching audio stream, since that is a very fast operation
-    # which would cause the loader to flicker.
-    # TODO: Only set the loader if switching audio is necessary.
-    setTimeout(
-      =>
-        LYT.loader.register 'Loading sound', result
-        LYT.render.disablePlayerNavigation()
-        result.done -> LYT.render.enablePlayerNavigation()
-      500
-    )
-
-    result
+      @_setCurrentSegment segment
 
   # Plays the given segment
   playSegment: (segment) -> @playSegmentOffset segment, null

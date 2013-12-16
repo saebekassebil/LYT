@@ -35,10 +35,12 @@ LYT.control =
       if LYT.cache.read 'session', 'credentials' or LYT.cache.read 'lyt', 'settings'
         return '0.0.2'
 
+    ### SPECIAL JULE-HACKY VERSION
     if lastVersion() and lastVersion() isnt LYT.VERSION
       LYT.var.next = window.location.hash
       window.location.hash = '#splash-upgrade'
     LYT.cache.write 'lyt', 'lastVersion', LYT.VERSION
+    ###
 
   setupEventHandlers: ->
     $("#bookmark-add-button").on 'click', ->

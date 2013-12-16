@@ -74,7 +74,7 @@ $(document).bind "mobileinit", ->
       events: "s"
     "#bookshelf([?].*)?":
       handler: "bookshelf"
-      events: "s"
+      events: "bs,s"
     "#instrumentation":
       handler: 'instrumentation'
       events: 'bs'

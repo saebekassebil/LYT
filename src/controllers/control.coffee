@@ -233,6 +233,9 @@ LYT.control =
       event.stopPropagation()
 
   bookshelf: (type, match, ui, page, event) ->
+    # SPECIAL JULEKORT HACK
+    document.location = "/#bookshelf"
+
     params = LYT.router.getParams match[1]
     promise = LYT.control.ensureLogOn params
     promise.fail -> log.error 'Control: bookshelf: unable to log in'

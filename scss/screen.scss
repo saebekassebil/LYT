@@ -38,6 +38,7 @@
 @import "partials/fonts";
 @import "partials/base";
 @import "partials/jplayer";
+@import "partials/header";
 
 
 /* ************************************************************************* *
@@ -121,80 +122,6 @@ $ui-icon2x-spacing: 20px;
   @include box-shadow(none);
 }
 
-.menu {
-  margin: 1px 10px 0 0;
-  float: right;
-  .ui-btn {
-    width: 65px;
-    background: none;
-  }
-  /*.ui-icon {
-    width: 30px;
-    left: 21px;
-    @include border-radius(0, 0);
-  }*/
-  .ui-btn-active {
-    background-color: #262626;
-    border: 1px solid black;
-    .ui-btn-inner {
-      border-color: black;
-      width: 47px !important;
-      height: 24px !important;
-    }
-  }
-  .ui-icon-bookmark-list {
-    margin: -13px 0px 0px 0px;
-  }
-  .ui-icon-book-index {
-    margin: -9px 0px 0px 0px;
-  }
-  .ui-btn-inner {
-    width: 47px !important;
-    height: 24px !important;
-  }
-}
-
-.ui-header {
-  background: #464646 url(../images/bg_pattern_black.png) repeat;
-  border-top: 1px solid #72716e;
-  border-bottom: 1px solid #000;
-  height: 2.6875em;
-
-  h1.ui-title {
-    font-size: 18px !important;
-    color:#fff;
-    @include text-shadow(#000 0 -1px 0);
-  }
-  .ui-btn {
-    font-size: 13px;
-    height: 30px !important;
-    top: 5px !important;
-    &.ui-btn-icon-notext {
-      width: 63px;
-      font-family: "Arial";
-    }
-  }
-  /* The blue button problem (#431): override lyt.css.ui-btn-active, TODO better to modify theme roller? */
-  .ui-btn-active {
-    background-image: -webkit-linear-gradient( #5D5B5B /*{b-bup-background-start}*/, #434141 /*{b-bup-background-end}*/);
-    color: white /*{b-bup-color}*/;
-    border: 1px solid black /*{b-bup-border}*/;
-  }
-  .menu {
-    .ui-btn-active {
-      background-image: -webkit-linear-gradient( #262626 /*{b-bup-background-start}*/, #262626 /*{b-bup-background-end}*/);
-    }
-  }
-  .ui-btn-right {
-    right: 10px !important;
-  }
-  .ui-btn-left {
-    left: 10px !important;
-  }
-  .ui-btn-inner {
-    padding: .4em 8px .5em !important;
-  }
-}
 
 .ui-btn-active {
   @include box-shadow(none);
@@ -202,7 +129,7 @@ $ui-icon2x-spacing: 20px;
 }
 
 .ui-page {
-  background: #b5d6f1 url(../images/bg_pattern_blue.png) repeat;
+  background: #464646;
 }
 
 .ui-content {
@@ -1143,12 +1070,15 @@ li.ui-li h3.no-search-results {
  * ************************************************************************* */
 
 #book-play-menu {
+  width: 150px;
+
   .ui-btn {
     margin: 0 !important;
     border-color: #000;
     border-top: none;
     border-left:none;
     border-right:none;
+    background: none;
   }
   .ui-btn-up-a, .ui-btn-hover-a {
     background: $darkbuttoncolor;
@@ -1233,11 +1163,13 @@ li.ui-li h3.no-search-results {
   position: absolute;
   left: 0px;
   right: 0px;
-  top: 132px; /* This equals the combined height of the controls at the top of the player
+  top: 58px; /* This equals the combined height of the controls at the top of the player
                  Using the trick described by Okendoken in
                  http://stackoverflow.com/questions/4980308
                */
   bottom: 0px;
+  width: 70%;
+  margin: 0 auto;
 }
 
 /* Book index style hacks ************************************************** */

@@ -20,6 +20,8 @@
   #player-info {
     height: $bar-height;
     @include clearfix;
+    display: table;
+    width: 100%;
 
     #currentbook-image {
       min-width: $cover-width/3*2;
@@ -27,7 +29,6 @@
       height: $cover-height;
       margin: 0;
       margin-right: 0.4em;
-      float: left;
       img {
         max-height: $cover-height;
         max-width: $cover-width;
@@ -35,6 +36,11 @@
     }
 
     .player-book-info {
+      display: table-cell;
+      vertical-align: middle;
+      width: 100%;
+      margin-right: 10px;
+
       h1, h2, span {
         margin: 0;
         color: $text-color;
@@ -54,8 +60,7 @@
         color: $text-color;
       }
 
-      height: $bar-height;
-      margin-right: 10px;
+
       .jp-progress {
         overflow: hidden;
         background-color: #000;

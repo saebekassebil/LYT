@@ -1,0 +1,97 @@
+@import "compass/css3";
+
+  // A class for each block in the header
+  .header-block {
+    display: table-cell;
+    vertical-align: middle;
+    padding: 5px;
+  }
+
+  .leftcontrols {
+    width: 100px;
+  }
+
+  .topmenu {
+    display: table-row;
+    padding: 5px;
+  }
+
+  // A wrapper for the controls (settings, bookmark, etc)
+  .menu {
+    min-width: 200px; //TODO: Ca
+
+    margin: 1px 10px 0 0;
+    .ui-btn {
+      width: 65px;
+      background: none;
+    }
+    .ui-btn-active {
+      background-color: #262626;
+      border: 1px solid black;
+      .ui-btn-inner {
+        border-color: black;
+        width: 47px !important;
+        height: 24px !important;
+      }
+    }
+    .ui-icon-bookmark-list {
+      margin: -13px 0px 0px 0px;
+    }
+    .ui-icon-book-index {
+      margin: -9px 0px 0px 0px;
+    }
+    .ui-btn-inner {
+      width: 47px !important;
+      height: 24px !important;
+    }
+  }
+
+  // A wrapper class for the entire top menu
+  .ui-header {
+    display: table;
+    width: 100%;
+
+    background: #292929;
+    border-top: 1px solid #72716e;
+    border-bottom: 1px solid #000;
+
+    h1.ui-title {
+      font-size: 18px !important;
+      color:#fff;
+      @include text-shadow(#000 0 -1px 0);
+    }
+
+    .ui-btn-inner {
+      border: 0px;
+    }
+
+    .ui-btn {
+      border: 0px;
+      font-size: 13px;
+      height: 30px !important;
+      &.ui-btn-icon-notext {
+        width: 63px;
+        font-family: "Arial";
+      }
+    }
+    /* The blue button problem (#431): override lyt.css.ui-btn-active, TODO better to modify theme roller? */
+    .ui-btn-active {
+      background: none;
+      color: white /*{b-bup-color}*/;
+    }
+
+    .menu {
+      .ui-btn-active {
+        background: none;
+      }
+    }
+
+    .ui-btn-right {
+      right: 10px !important;
+    }
+
+    .ui-btn-left {
+      left: 10px !important;
+    }
+  }
+

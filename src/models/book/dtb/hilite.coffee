@@ -6,6 +6,6 @@
 # Caveat emptor: Since a bookmark refers to a SMIL par (or seq) element,
 # the attribute timeOffset is a SMIL offset, not an audio offset.
 
-class LYT.Bookmark
+class LYT.Hilite
   constructor: (data) ->
     @[key] = data[key] for key in ['note', 'URI', 'timeOffset', 'charOffset', 'ncxRef']

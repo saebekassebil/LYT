@@ -247,7 +247,6 @@ LYT.protocol =
       resources
 
 
-  # TODO: Handle hilite-nodes? cf. [the specs](http://www.daisy.org/z3986/2005/Z3986-2005.html#li_447)
   getBookmarks:
     request: (bookID) ->
       contentID: bookID
@@ -255,11 +254,15 @@ LYT.protocol =
     receive: ($xml) ->
       NS_DODP = 'http://www.daisy.org/ns/daisy-online/'
       NS_BOOKMARK = 'http://www.daisy.org/z3986/2005/bookmark/'
+
       deserialize = (data) ->
+        tagname = data.localName?.toLowerCase()
+
         for child in data.childNodes
           switch child.localName.toLowerCase()
             when 'uri' then uri = child.textContent
             when 'timeoffset' then timeOffset = child.textContent
+            when 'charoffset' then charOffset = child.textContent
             when 'ncxref' then ncxRef = child.textContent
             when 'note' then note = child.textContent
 
@@ -279,12 +282,17 @@ LYT.protocol =
               values[0] * 3600 + values[1] * 60 + values[2] + values[3]
 
         timeOffset = parseOffset timeOffset
-        if uri and timeOffset?
-          return new LYT.Bookmark
+        if uri and (timeOffset? or charOffset?)
+          obj =
             ncxRef:     ncxRef
             URI:        uri
             timeOffset: timeOffset
+            charOffset: charOffset
             note:       text: note || '-'
+
+          return new LYT.Bookmark obj if tagname is 'bookmark'
+          return new LYT.Hilite obj if tagname is 'hilite'
+
 
 
       # Fix MTM bug. <bookmarkSet> does *NOT* belong to NS_BOOKMARK
@@ -309,7 +317,7 @@ LYT.protocol =
             title.text = text[0].textContent if text.length
             title.audio = audio[0].textContent if audio.length
             bookmarkSet.book.title = title
-          when 'bookmark'
+          when 'bookmark', 'hilite'
             bookmark = deserialize child
             if bookmark
               bookmarkSet.bookmarks.push bookmark
